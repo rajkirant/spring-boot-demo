@@ -40,9 +40,9 @@ public class TutorialController {
 	
 
 
-	@GetMapping("/tutorials")
-	public Object getAllTutorials(@RequestParam(required = false) String title) {
-		TypedQuery<List<?>> o =(TypedQuery<List<?>>) entityManager.createQuery(title);
+	@GetMapping("/jpql")
+	public Object getAllTutorials(@RequestBody(required = false) String query) {
+		TypedQuery<List<?>> o =(TypedQuery<List<?>>) entityManager.createQuery(query);
 		return o.getResultList();
 	}
 
