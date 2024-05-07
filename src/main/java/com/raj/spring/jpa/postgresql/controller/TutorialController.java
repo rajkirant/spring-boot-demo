@@ -37,8 +37,11 @@ public class TutorialController {
 	
 	@Autowired
 	EntityManager entityManager;
-	
 
+	@GetMapping("/test")
+	public Object getAllTutorialas(@RequestBody(required = false) String query) {
+		return "testing done";
+	}
 
 	@GetMapping("/jpql")
 	public Object getAllTutorials(@RequestBody(required = false) String query) {
@@ -46,19 +49,14 @@ public class TutorialController {
 		return o.getResultList();
 	}
 
-	/*
-	 * @GetMapping("/tutorials/{id}") public ResponseEntity<Tutorial>
-	 * getTutorialById(@PathVariable("id") long id) { Optional<Tutorial>
-	 * tutorialData = tutorialRepository.findById(id);
-	 * 
-	 * if (tutorialData.isPresent()) { return new
-	 * ResponseEntity<>(tutorialData.get(), HttpStatus.OK); } else { return new
-	 * ResponseEntity<>(HttpStatus.NOT_FOUND); } }
-	 */
+	@GetMapping("/find")
+	public Object findAll(@RequestBody(required = false) String query) {
+		return tutorialRepository.findAll();
+	}
 
 	
 	  @PostMapping("/tutorials") public Tutorial
-	  createTutorial(@RequestBody Tutorial tutorial) { 
+	  createTutorial(@RequestBody Tutorial tutorial) {
 		  Tutorial t1 = new Tutorial();
 		  t1.setDescription("t1");
 		  List<Tutorial> l1 = new ArrayList<Tutorial>();
@@ -67,39 +65,5 @@ public class TutorialController {
 		  tutorialRepository.saveAll(l1);
 		  return null;
 	}
-	 /*
-	 * @PutMapping("/tutorials/{id}") public ResponseEntity<Tutorial>
-	 * updateTutorial(@PathVariable("id") long id, @RequestBody Tutorial tutorial) {
-	 * Optional<Tutorial> tutorialData = tutorialRepository.findById(id);
-	 * 
-	 * if (tutorialData.isPresent()) { Tutorial _tutorial = tutorialData.get();
-	 * _tutorial.setTitle(tutorial.getTitle());
-	 * _tutorial.setDescription(tutorial.getDescription());
-	 * _tutorial.setPublished(tutorial.isPublished()); return new
-	 * ResponseEntity<>(tutorialRepository.save(_tutorial), HttpStatus.OK); } else {
-	 * return new ResponseEntity<>(HttpStatus.NOT_FOUND); } }
-	 * 
-	 * @DeleteMapping("/tutorials/{id}") public ResponseEntity<HttpStatus>
-	 * deleteTutorial(@PathVariable("id") long id) { try {
-	 * tutorialRepository.deleteById(id); return new
-	 * ResponseEntity<>(HttpStatus.NO_CONTENT); } catch (Exception e) { return new
-	 * ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); } }
-	 * 
-	 * @DeleteMapping("/tutorials") public ResponseEntity<HttpStatus>
-	 * deleteAllTutorials() { try { tutorialRepository.deleteAll(); return new
-	 * ResponseEntity<>(HttpStatus.NO_CONTENT); } catch (Exception e) { return new
-	 * ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); }
-	 * 
-	 * }
-	 * 
-	 * @GetMapping("/tutorials/published") public ResponseEntity<List<Tutorial>>
-	 * findByPublished() { try { List<Tutorial> tutorials =
-	 * tutorialRepository.findByPublished(true);
-	 * 
-	 * if (tutorials.isEmpty()) { return new
-	 * ResponseEntity<>(HttpStatus.NO_CONTENT); } return new
-	 * ResponseEntity<>(tutorials, HttpStatus.OK); } catch (Exception e) { return
-	 * new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); } }
-	 */
 
 }
